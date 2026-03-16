@@ -1,0 +1,14 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<body>
+    <h3>Listing details:</h3>
+    <img src="<%=list.image.url%>" alt="listing_image" style="height: 18rem; border-radius: 2-px;">
+    <ul>
+        <li>Name: <%=hotel.title%></li>
+        <li>Description: <%=hotel.description%></li>
+<li>Price: &#8377;<%= (hotel.price || 0).toLocaleString("en-IN") %></li>        <li>Location:<%=hotel.location%></li>
+    </ul>
+    <a href="/listing/<%=hotel._id%>/edit">Edit this listing</a>
+   <form  method="post" action="/listing/<%=hotel._id%>?_method=DELETE">
+    <button>Delete this listing</button>
+   </form>
+</body>

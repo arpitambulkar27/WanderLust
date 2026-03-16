@@ -1,0 +1,92 @@
+<% layout("/layouts/boilerplate.ejs") %>
+  <div class="row">
+    <div class="col-8 offset-2">
+      <form method="POST" action="/listings/<%=hotel._id%>?_method=PUT" class="needs-validation" novalidate>
+        <div class="mb-3">
+          <label for="title" class="form-label mt-4">Title</label><br />
+          <input
+            type="text"
+            class="form-control"
+            name="title"
+            value="<%=hotel.title%>"
+            required
+          />
+          <div class="invalid-feedback">
+        Please enter title.
+      </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label><br />
+          <textarea type="text" class="form-control" name="description" required>
+            <%=hotel.description%>  </textarea>
+           
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="form-label">Image Link</label><br />
+
+          <input
+            type="text"
+            name="image"
+            value="<%=hotel.image.url%>"
+            class="form-control"
+            required
+          />
+          <div class="invalid-feedback">
+        Please add image.
+      </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-4">
+            <label for="price" class="form-label">Price</label><br />
+
+            <input
+              type="number"
+              class="form-control"
+              name="price"
+              value="<%=hotel.price%>"
+              required
+            />
+            <div class="invalid-feedback">
+        Enter valid price.
+      </div>
+          </div>
+          <div class="mb-3 col-md-8">
+            <label for="country" class="form-label">Country</label><br />
+
+            <input
+              type="text"
+              class="form-control"
+              name="country"
+              value="<%=hotel.country%>"
+              required
+            />
+            <div class="invalid-feedback">
+        Enter valid country.
+      </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label><br />
+
+          <input
+            type="text"
+            class="form-control"
+            name="location"
+            value="<%=hotel.location%>"
+            required
+          />
+          <div class="invalid-feedback">
+        Enter valid location.
+      </div>
+        </div>
+
+        <br /><br />
+        <button class="btn btn-dark">Edit</button>
+      </form>
+    </div>
+  </div>
+<script src="/js/script.js"></script>
