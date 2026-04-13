@@ -1,14 +1,97 @@
 <% layout("/layouts/boilerplate.ejs") %>
 <body>
-    <h3>Listing details:</h3>
-    <img src="<%=list.image.url%>" alt="listing_image" style="height: 18rem; border-radius: 2-px;">
+  <div class="col-8 offset-3">
+    <h3><%=hotel.title%></h3>
+    <img
+      src="<%=hotel.image.url%>"
+      alt="listing_image"
+      style="height: 18rem; border-radius: 2-px"
+    />
     <ul>
-        <li>Name: <%=hotel.title%></li>
-        <li>Description: <%=hotel.description%></li>
-<li>Price: &#8377;<%= (hotel.price || 0).toLocaleString("en-IN") %></li>        <li>Location:<%=hotel.location%></li>
+      <li>Description: <%=hotel.description%></li>
+      <li>Price: &#8377;<%= (hotel.price || 0).toLocaleString("en-IN") %></li>
+      <li>Location:<%=hotel.location%></li>
     </ul>
-    <a href="/listing/<%=hotel._id%>/edit">Edit this listing</a>
-   <form  method="post" action="/listing/<%=hotel._id%>?_method=DELETE">
-    <button>Delete this listing</button>
-   </form>
+    <a href="/listings/<%=hotel._id%>/edit">
+      <button
+        style="
+          background-color: #e74c3c;
+          color: white;
+          border: none;
+          padding: 8px 18px;
+          border-radius: 5px;
+          cursor: pointer;
+        "
+      >
+        Edit
+      </button>
+    </a>
+    <form
+      method="post"
+      action="/listings/<%=hotel._id%>?_method=DELETE"
+      style="display: inline"
+    >
+      <button
+        style="
+          background-color: #2c2c2c;
+          color: white;
+          border: none;
+          padding: 8px 18px;
+          border-radius: 5px;
+          cursor: pointer;
+        "
+      >
+        Delete
+      </button>
+    </form>
+  </div>
+
+  <hr />
+  <div class="col-8 offset-3 mb-3">
+    <h4>Leave a Review</h4>
+    <br />
+    <form action="/listings/<%=hotel._id%>/reviews" method="post" novalidate class="needs-validation">
+      <div class="mb-3 mt-3">
+        <label for="rating" class="form-label">Rating</label>
+        <input type="range" min="1" max="5" id="rating" name="review[rating]" />
+      </div>
+
+      <div class="mb-3 mt-3">
+        <label for="comment" class="form-label">Commments</label>
+        <textarea
+          name="review[comment]"
+          id="comment"
+          cols="30"
+          rows="5"
+          class="form-control"
+          required
+        ></textarea>
+        <div class="invalid-feedback">
+          Please add some comments for review
+        </div>
+      </div>
+
+      <button class="btn btn-outline-dark mb-3 mt-3">Submit</button>
+    </form>
+
+    <h4>All reviews</h4>
+    <div class="row">
+  <% for(review of hotel.review) { %>
+    
+    <div class="col-md-6 mb-3"> <!-- 2 per row -->
+      <div class="card h-100  border border-dark">
+        <div class="card-body">
+          <h5 class="card-title">Visitor</h5>
+          <p class="card-text"><%= review.comment %></p>
+          <p><%= review.rating %></p>
+        </div>
+        <form action="/listings/<%=hotel._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+  <button class="btn btn-sm btn-dark mb-2 ms-2">Delete</button>
+</form>
+      </div>
+    </div>
+
+  <% } %>
+</div>
+  </div>
 </body>
