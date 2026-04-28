@@ -1,109 +1,46 @@
 const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
-const ExpressError = require("../utils/ExpressError.js");
-const { listingSchema } = require("../schema.js");
+
 const Listing = require("../models/listing.js");
+const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
+const { findById } = require("../models/user.js");
+const multer = require("multer");
+const {storage} = require("../cloudConfig.js");
+const upload = multer({storage});
+const listingController = require("../controllers/listings.js");
 
-const validateListing = (req, res, next) => {
-  let { error } = listingSchema.validate(req.body);
-  if (error) {
-    throw new ExpressError(400, error.details.map((e) => e.message).join(", "));
-  }
-  next();
-};
-
-// INDEX
-router.get(
-  "/",
-  wrapAsync(async (req, res) => {
-    const allListing = await Listing.find({});
-    res.render("listing/index.ejs", { allListing });
-  }),
-);
+router //Index + CreateListing
+  .route("/")
+  .get(wrapAsync(listingController.index))
+  .post(
+    isLoggedIn,
+    validateListing,
+    upload.single("listing[image]"),
+    wrapAsync(listingController.createListing),
+  );
 
 // NEW
-router.get("/new", (req, res) => {
-  res.render("listing/new.ejs");
-});
+router.get("/new", isLoggedIn, listingController.renderNewForm);
 
-// SHOW
-router.get(
-  "/:id",
-  wrapAsync(async (req, res) => {
-    const { id } = req.params;
-    const hotel = await Listing.findById(id).populate("review");
-    if (!hotel) {
-      req.flash("error", "Listing does not exist!");
-      return res.redirect("/listings");
-    }
-    res.render("listing/show.ejs", { hotel });
-  }),
-);
-
-// CREATE
-router.post(
-  "/",
-  validateListing,
-  wrapAsync(async (req, res) => {
-    const listingData = req.body.listing;
-    const newListing = new Listing({
-      ...listingData,
-      image: {
-        url:
-          listingData.image ||
-          "https://images.pexels.com/photos/46160/field-clouds-sky-earth-46160.jpeg",
-        filename: "listingimage",
-      },
-    });
-    await newListing.save();
-    req.flash("success", "New Listing Created!");
-    res.redirect("/listings");
-  }),
-);
+router //Show + Update + Delete
+  .route("/:id")
+  .get(wrapAsync(listingController.showListing))
+  .put(
+    isLoggedIn,
+    isOwner,
+    upload.single("listing[image]"),
+    validateListing,
+    wrapAsync(listingController.updateListing),
+  )
+  .delete(isLoggedIn, isOwner, wrapAsync(listingController.deleteListing));
 
 // EDIT
 router.get(
   "/:id/edit",
-  wrapAsync(async (req, res) => {
-    const { id } = req.params;
-    const hotel = await Listing.findById(id);
-    if (!hotel) {
-      req.flash("error", "Listing does not exist!");
-      return res.redirect("/listings");
-    }
-    res.render("listing/edit.ejs", { hotel });
-  }),
-);
-
-// UPDATE
-router.put(
-  "/:id",
-  validateListing,
-  wrapAsync(async (req, res) => {
-    const { id } = req.params;
-    const listingData = req.body.listing;
-    await Listing.findByIdAndUpdate(id, {
-      ...listingData,
-      image: {
-        url: listingData.image,
-        filename: "listingimage",
-      },
-    });
-    req.flash("success", "Listing Updated!");
-    res.redirect(`/listings/${id}`);
-  }),
-);
-
-// DELETE
-router.delete(
-  "/:id",
-  wrapAsync(async (req, res) => {
-    const { id } = req.params;
-    await Listing.findByIdAndDelete(id);
-    req.flash("success", "Listing Deleted!");
-    res.redirect("/listings");
-  }),
+  isLoggedIn,
+  isOwner,
+  wrapAsync(listingController.editListing),
 );
 
 module.exports = router;

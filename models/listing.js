@@ -10,19 +10,8 @@ const listingSchema = new Schema({
   description: String,
 
   image: {
-    filename: {
-      type: String,
-      default: "listingimage",
-    },
-    url: {
-      type: String,
-      default:
-        "https://images.pexels.com/photos/46160/field-clouds-sky-earth-46160.jpeg",
-      set: (v) =>
-        v === "" || v == null
-          ? "https://images.pexels.com/photos/46160/field-clouds-sky-earth-46160.jpeg"
-          : v,
-    },
+   url:String,
+   filename:String,
   },
 
   price: Number,
@@ -35,6 +24,10 @@ const listingSchema = new Schema({
       ref: "Review",
     },
   ],
+  owner:{
+    type:Schema.Types.ObjectId,
+    ref:"User",
+  },
 });
 
 listingSchema.post("findOneAndDelete", async (listing) => {
