@@ -17,7 +17,7 @@
 
 ## 🚀 Live Demo
 
-👉 **[https://wanderlust-zh1o.onrender.com](https://wanderlust-zh1o.onrender.com)**
+👉 **[https://wanderlust-zh1o.onrender.com/listings](https://wanderlust-zh1o.onrender.com/listings)**
 
 ---
 
