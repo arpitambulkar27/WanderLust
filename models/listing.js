@@ -10,13 +10,33 @@ const listingSchema = new Schema({
   description: String,
 
   image: {
-   url:String,
-   filename:String,
+    url: String,
+    filename: String,
   },
 
   price: Number,
   location: String,
   country: String,
+  category: {
+    type: String,
+    enum: [
+      "trending",
+      "beach",
+      "castles",
+      "mountains",
+      "farms",
+      "cabins",
+      "treehouses",
+      "camping",
+      "lakefront",
+      "islands",
+      "desert",
+      "snow",
+      "luxury",
+      "historic",
+      "amazing-views",
+    ],
+  },
 
   review: [
     {
@@ -24,9 +44,9 @@ const listingSchema = new Schema({
       ref: "Review",
     },
   ],
-  owner:{
-    type:Schema.Types.ObjectId,
-    ref:"User",
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
   },
 });
 

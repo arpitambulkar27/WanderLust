@@ -40,99 +40,112 @@
   </style>
 
   <!-- Filters -->
-  <div class="filters">
-    <div class="filter">
-      <div class="icon">
-        <i class="fa-solid fa-fire"></i>
-      </div>
-      <p>Trending</p>
+<div class="filters">
+  <a href="/listings?category=trending" class="filter <%= category === 'trending' ? 'active' : '' %>">
+    <div class="icon">
+      <i class="fa-solid fa-fire"></i>
     </div>
+    <p>Trending</p>
+  </a>
 
-    <div class="filter">
-      <div class="icon">
-        <i class="fa-solid fa-bed"></i>
-      </div>
-      <p>Rooms</p>
+  <a href="/listings?category=beach" class="filter <%= category === 'beach' ? 'active' : '' %>">
+    <div class="icon">
+      <i class="fa-solid fa-umbrella-beach"></i>
     </div>
+    <p>Beach</p>
+  </a>
 
-    <div class="filter">
-      <div class="icon">
-        <i class="fa-solid fa-city"></i>
-      </div>
-      <p>Iconic Cities</p>
+  <a href="/listings?category=castles" class="filter <%= category === 'castles' ? 'active' : '' %>">
+    <div class="icon">
+      <i class="fa-solid fa-chess-rook"></i>
     </div>
+    <p>Castles</p>
+  </a>
 
-    <div class="filter">
-      <div class="icon">
-        <i class="fa-brands fa-fort-awesome"></i>
-      </div>
-      <p>Castles</p>
+  <a href="/listings?category=mountains" class="filter <%= category === 'mountains' ? 'active' : '' %>">
+    <div class="icon">
+      <i class="fa-solid fa-mountain"></i>
     </div>
+    <p>Mountains</p>
+  </a>
 
-    <div class="filter">
-      <div class="icon">
-        <i class="fa-solid fa-mountain"></i>
-      </div>
-      <p>Mountains</p>
+  <a href="/listings?category=farms" class="filter <%= category === 'farms' ? 'active' : '' %>">
+    <div class="icon">
+      <i class="fa-solid fa-tractor"></i>
     </div>
+    <p>Farms</p>
+  </a>
 
-    <div class="filter">
-      <div class="icon">
-        <i class="fa-solid fa-person-swimming"></i>
-      </div>
-      <p>Amazing pools</p>
+  <a href="/listings?category=cabins" class="filter <%= category === 'cabins' ? 'active' : '' %>">
+    <div class="icon">
+      <i class="fa-solid fa-house"></i>
     </div>
+    <p>Cabins</p>
+  </a>
 
-    <div class="filter">
-      <div class="icon">
-        <i class="fa-solid fa-cow"></i>
-      </div>
-      <p>Farms</p>
+  <a href="/listings?category=treehouses" class="filter <%= category === 'treehouses' ? 'active' : '' %>">
+    <div class="icon">
+      <i class="fa-solid fa-tree"></i>
     </div>
+    <p>Treehouses</p>
+  </a>
 
-    <div class="filter">
-      <div class="icon">
-        <i class="fa-solid fa-campground"></i>
-      </div>
-      <p>Camping</p>
+  <a href="/listings?category=camping" class="filter <%= category === 'camping' ? 'active' : '' %>">
+    <div class="icon">
+      <i class="fa-solid fa-campground"></i>
     </div>
+    <p>Camping</p>
+  </a>
 
-    <div class="filter">
-      <div class="icon">
-        <i class="fa-solid fa-snowman"></i>
-      </div>
-      <p>Arctic</p>
+  <a href="/listings?category=lakefront" class="filter <%= category === 'lakefront' ? 'active' : '' %>">
+    <div class="icon">
+      <i class="fa-solid fa-water"></i>
     </div>
+    <p>Lakefront</p>
+  </a>
 
-    <div class="filter">
-      <div class="icon">
-        <i class="fa-solid fa-landmark-dome"></i>
-      </div>
-      <p>Domes</p>
+  <a href="/listings?category=islands" class="filter <%= category === 'islands' ? 'active' : '' %>">
+    <div class="icon">
+      <i class="fa-solid fa-water"></i>
     </div>
+    <p>Islands</p>
+  </a>
 
-    <div class="filter">
-      <div class="icon">
-        <i class="fa-solid fa-ship"></i>
-      </div>
-      <p>Boats</p>
+  <a href="/listings?category=desert" class="filter <%= category === 'desert' ? 'active' : '' %>">
+    <div class="icon">
+      <i class="fa-solid fa-sun"></i>
     </div>
+    <p>Desert</p>
+  </a>
 
-    <!-- Tax Toggle -->
-    <div class="tax-switch">
-      <div class="form-check-reverse form-switch">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          role="switch"
-          id="flexSwitchCheckDefault"
-        />
-        <label class="form-check-label" for="flexSwitchCheckDefault">
-          Display after taxes
-        </label>
-      </div>
+  <a href="/listings?category=snow" class="filter <%= category === 'snow' ? 'active' : '' %>">
+    <div class="icon">
+      <i class="fa-solid fa-snowflake"></i>
     </div>
-  </div>
+    <p>Snow</p>
+  </a>
+
+  <a href="/listings?category=luxury" class="filter <%= category === 'luxury' ? 'active' : '' %>">
+    <div class="icon">
+      <i class="fa-solid fa-gem"></i>
+    </div>
+    <p>Luxury</p>
+  </a>
+
+  <a href="/listings?category=historic" class="filter <%= category === 'historic' ? 'active' : '' %>">
+    <div class="icon">
+      <i class="fa-solid fa-landmark"></i>
+    </div>
+    <p>Historic</p>
+  </a>
+
+  <a href="/listings?category=amazing-views" class="filter <%= category === 'amazing-views' ? 'active' : '' %>">
+    <div class="icon">
+      <i class="fa-solid fa-binoculars"></i>
+    </div>
+    <p>Amazing Views</p>
+  </a>
+</div>
 
   <!-- Listings -->
   <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
@@ -157,21 +170,3 @@
     <% } %>
   </div>
 </body>
-
-<script>
-  let taxSwitch = document.getElementById("flexSwitchCheckDefault");
-
-  taxSwitch.addEventListener("click", () => {
-    let taxInfo = document.getElementsByClassName("tax-info");
-    for(info of taxInfo){
-      if(info.style.display!="inline"){
-       info.style.display="inline";
-      }else{
-        info.style.display="none";
-      }
-      
-    }
-  });
-
-  
-</script>

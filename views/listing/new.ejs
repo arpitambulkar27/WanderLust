@@ -2,43 +2,170 @@
 
 <div class="row">
   <div class="col-8 offset-2">
-    <form method="POST" action="/listings" class="needs-validation" enctype="multipart/form-data" novalidate>
-
+    <form
+      method="POST"
+      action="/listings"
+      class="needs-validation"
+      enctype="multipart/form-data"
+      novalidate
+    >
       <div class="mb-3">
         <label class="form-label">Title</label>
-        <input type="text" name="listing[title]" class="form-control" required>
+        <input
+          type="text"
+          name="listing[title]"
+          class="form-control"
+          required
+        />
       </div>
 
       <div class="mb-3">
         <label class="form-label">Description</label>
-        <textarea name="listing[description]" class="form-control" required></textarea>
+        <textarea
+          name="listing[description]"
+          class="form-control"
+          required
+        ></textarea>
       </div>
 
-       <div class="mb-3">
+      <div class="mb-3">
         <label class="form-label">Upload Image</label>
-        <input type="file" name="listing[image]" class="form-control" required>
-        
+        <input
+          type="file"
+          name="listing[image]"
+          class="form-control"
+          required
+        />
       </div>
 
       <div class="row">
         <div class="col-md-4 mb-3">
           <label class="form-label">Price</label>
-          <input type="number" name="listing[price]" class="form-control" required>
+          <input
+            type="number"
+            name="listing[price]"
+            class="form-control"
+            required
+          />
         </div>
 
         <div class="col-md-8 mb-3">
           <label class="form-label">Country</label>
-          <input type="text" name="listing[country]" class="form-control" required>
+          <input
+            type="text"
+            name="listing[country]"
+            class="form-control"
+            required
+          />
         </div>
       </div>
 
       <div class="mb-3">
         <label class="form-label">Location</label>
-        <input type="text" name="listing[location]" class="form-control" required>
+        <input
+          type="text"
+          name="listing[location]"
+          class="form-control"
+          required
+        />
       </div>
 
-      <button class="btn btn-dark">Add</button>
+      <div class="mb-3">
+        <label class="form-label">Category</label>
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="categoryDropdownBtn"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Select Category
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="#" data-value="trending"
+                >Trending</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" data-value="beach">Beach</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" data-value="castles">Castles</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" data-value="mountains"
+                >Mountains</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" data-value="farms">Farms</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" data-value="cabins">Cabins</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" data-value="treehouses"
+                >Treehouses</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" data-value="camping">Camping</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" data-value="lakefront"
+                >Lakefront</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" data-value="islands">Islands</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" data-value="desert">Desert</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" data-value="snow">Snow</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" data-value="luxury">Luxury</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" data-value="historic"
+                >Historic</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" data-value="amazing-views"
+                >Amazing Views</a
+              >
+            </li>
+          </ul>
+        </div>
 
+        <!-- Ye hidden input hi actual form data hai jo backend tak jayega -->
+        <input
+          type="hidden"
+          name="listing[category]"
+          id="categoryInput"
+          required
+        />
+      </div>
+
+      <script>
+        document.querySelectorAll(".dropdown-item").forEach(function (item) {
+          item.addEventListener("click", function (e) {
+            e.preventDefault();
+            const value = this.getAttribute("data-value");
+            const text = this.textContent;
+
+            document.getElementById("categoryInput").value = value;
+            document.getElementById("categoryDropdownBtn").textContent = text;
+          });
+        });
+      </script>
+
+      <button class="btn btn-dark">Add</button>
     </form>
   </div>
 </div>

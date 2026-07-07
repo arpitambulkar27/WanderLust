@@ -1,5 +1,5 @@
-if(process.env.NODE_ENV!="production"){
-require("dotenv").config();
+if (process.env.NODE_ENV != "production") {
+  require("dotenv").config();
 }
 const express = require("express");
 const app = express();
@@ -31,7 +31,6 @@ async function main() {
   await mongoose.connect(dbUrl);
 }
 
-
 main()
   .then(() => {
     console.log("Connected to DB");
@@ -39,7 +38,6 @@ main()
   .catch((err) => {
     console.log(err);
   });
-
 
 const store = MongoStore.create({
   mongoUrl: dbUrl,
@@ -65,7 +63,6 @@ const sessionOptions = {
   },
 };
 
-
 app.use(session(sessionOptions));
 app.use(flash());
 
@@ -76,7 +73,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currUser = req.user;
