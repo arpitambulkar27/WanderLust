@@ -37,20 +37,37 @@
       </div>
 
       <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search">
-      <input class="form-control me-2 search-input" type="search" placeholder="Search Destination" aria-label="Search"/>
-      <button class="btn search-btn" type="submit"><i class="fas fa-search"></i>&nbsp;&nbsp;Search</button>
-    </form>
+      <form class="d-flex" role="search" action="/listings" method="GET">
+<input
+  class="form-control me-2 search-input"
+  type="search"
+  name="search"
+  value="<%= locals.search || '' %>"
+  placeholder="Search Destination"
+  aria-label="Search"
+/>
+<% if (locals.category) { %>
+  <input type="hidden" name="category" value="<%= locals.category %>">
+<% } %>
+  <button class="btn search-btn" type="submit">
+    <i class="fas fa-search"></i>&nbsp;&nbsp;Search
+  </button>
+</form>
       </div>
 
       <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listings/new">Add new listing</a>
+        <a class="nav-link" href="/listings/new">
+          <button type="button" class="btn btn-success">Add Listing</button>
+        </a>
+        
         <% if(!currUser){%>
         <a class="nav-link"  href="/login"><b>Login</b></a>
         <a class="nav-link" href="/Signup"><b>Signup</b></a>
        <% } %>
        <% if(currUser){%>
-      <a class="nav-link" href="/logout"><b>Log out</b></a>
+      <a class="nav-link" href="/logout">
+        <button type="button" class="btn btn-warning">Log out</button>
+      </a>
        <% } %>
         
         
