@@ -6,9 +6,13 @@ const Listing = require("../models/listing.js");
 const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
 const { findById } = require("../models/user.js");
 const multer = require("multer");
-const {storage} = require("../cloudConfig.js");
-const upload = multer({storage});
+const { storage } = require("../cloudConfig.js");
+const upload = multer({ storage });
 const listingController = require("../controllers/listings.js");
+const Booking = require("../models/booking.js");
+const bookingController = require("../controllers/bookings.js");
+const { validateBooking } = require("../middleware");
+
 
 router //Index + CreateListing
   .route("/")
@@ -41,6 +45,13 @@ router.get(
   isLoggedIn,
   isOwner,
   wrapAsync(listingController.editListing),
+);
+
+router.post(
+  "/:id/bookings",
+  isLoggedIn,
+  validateBooking,
+  wrapAsync(bookingController.createBooking),
 );
 
 module.exports = router;

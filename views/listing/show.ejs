@@ -48,6 +48,49 @@
     </form>
  <% } %>
   </div>
+  
+  <div class="card mt-4 p-3">
+  <h4>Reserve this place</h4>
+
+  <form action="/listings/<%=hotel._id%>/bookings" method="POST">
+    <div class="mb-3">
+      <label for="checkIn" class="form-label">Check-in</label>
+      <input
+        type="date"
+        id="checkIn"
+        name="booking[checkIn]"
+        class="form-control"
+        required
+      >
+    </div>
+
+    <div class="mb-3">
+      <label for="checkOut" class="form-label">Check-out</label>
+      <input
+        type="date"
+        id="checkOut"
+        name="booking[checkOut]"
+        class="form-control"
+        required
+      >
+    </div>
+
+    <div class="mb-3">
+      <label for="guests" class="form-label">Guests</label>
+      <input
+        type="number"
+        id="guests"
+        name="booking[guests]"
+        class="form-control"
+        min="1"
+        value="1"
+        required
+      >
+    </div>
+
+    <button class="btn btn-dark">Reserve</button>
+  </form>
+</div>
  
 
   <hr />
@@ -120,4 +163,43 @@
   <% } %>
 </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    const bookedDates = <%- JSON.stringify(bookings) %>;
+
+    // console.log(bookedDates);
+ // CheckIn picker ke liye: occupied nights disable (checkIn se checkOut-1 tak)
+const checkInDisable = bookedDates.map((booking) => {
+    const end = new Date(booking.checkOut);
+    end.setUTCDate(end.getUTCDate() - 1);
+    return {
+        from: booking.checkIn.split("T")[0],
+        to: end.toISOString().split("T")[0]
+    };
+});
+
+// CheckOut picker ke liye: range ek din shift (checkIn+1 se checkOut tak)
+const checkOutDisable = bookedDates.map((booking) => {
+    const start = new Date(booking.checkIn);
+    start.setUTCDate(start.getUTCDate() + 1);
+    return {
+        from: start.toISOString().split("T")[0],
+        to: booking.checkOut.split("T")[0]
+    };
+});
+console.log("checkOutDisable:", checkOutDisable);
+
+flatpickr("#checkIn", {
+    minDate: "today",
+    dateFormat: "Y-m-d",
+    disable: checkInDisable
+});
+
+flatpickr("#checkOut", {
+    minDate: "today",
+    dateFormat: "Y-m-d",
+    disable: checkOutDisable
+});
+</script>
 </body>

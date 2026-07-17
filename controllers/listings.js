@@ -1,4 +1,5 @@
 const Listing = require("../models/listing");
+const Booking = require("../models/booking");
 
 module.exports.index = async (req, res) => {
   const { category, search } = req.query;
@@ -38,8 +39,8 @@ module.exports.showListing = async (req, res) => {
     req.flash("error", "Listing does not exist!");
     return res.redirect("/listings");
   }
-  // console.log(hotel);
-  res.render("listing/show.ejs", { hotel });
+  const bookings = await Booking.find({listing:id});
+  res.render("listing/show.ejs", { hotel,bookings });
 };
 
 module.exports.createListing = async (req, res) => {

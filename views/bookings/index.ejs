@@ -1,0 +1,172 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<body>
+    <style>
+.booking-card{
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid #dcdcdc;
+    transition: transform .3s ease, box-shadow .3s ease;
+    margin-bottom:2.5rem;
+}
+
+.booking-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+    border-color:#bbb;
+}
+
+.booking-img{
+    width:100%;
+    height:100%;
+    min-height:320px;
+    object-fit:cover;
+    display:block;
+}
+
+.booking-card .card-body{
+    padding:2rem 2.5rem 2rem 2rem;
+}
+
+.booking-details-col{
+    padding-left:1.5rem;
+}
+
+@media (max-width: 767px){
+    .booking-details-col{
+        padding-left:0;
+    }
+    .booking-card .card-body{
+        padding:2rem;
+    }
+}
+
+.booking-info{
+    background:#f8f9fa;
+    border-radius:12px;
+    padding:14px 18px;
+    transition:.3s;
+}
+
+.booking-info:hover{
+    background:#f1f3f5;
+}
+    </style>
+<div class="container py-5">
+<h2 class="fw-bold mb-5">
+    My Trips
+</h2>
+    <% if(bookings.length === 0){ %>
+
+        <div class="alert alert-info">
+            You haven't booked any trips yet.
+        </div>
+
+    <% } else { %>
+
+        <% bookings.forEach((booking) => { %>
+          <div class="card booking-card shadow-sm">
+
+    <div class="row g-0 align-items-center">
+
+        <!-- Image -->
+<div class="col-lg-4 col-md-5">
+                <img
+                src="<%= booking.listing.image.url %>"
+                class="booking-img"
+                alt="Listing Image"
+            >
+        </div>
+
+        <!-- Details -->
+       <div class="col-lg-8 col-md-7 booking-details-col">
+
+            <div class="card-body">
+
+                <h2 class="fw-bold mb-1">
+                    <%= booking.listing.title %>
+                </h2>
+
+                <p class="text-muted mb-4">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <%= booking.listing.location %>,
+                    <%= booking.listing.country %>
+                </p>
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <div class="booking-info">
+                            <small class="text-muted">Check-In</small>
+                            <h6 class="mb-0">
+                                <%= booking.checkIn.toDateString() %>
+                            </h6>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="booking-info">
+                            <small class="text-muted">Check-Out</small>
+                            <h6 class="mb-0">
+                                <%= booking.checkOut.toDateString() %>
+                            </h6>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="booking-info">
+                            <small class="text-muted">Guests</small>
+                            <h6 class="mb-0">
+                                <%= booking.guests %>
+                            </h6>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="booking-info">
+                            <small class="text-muted">Total Paid</small>
+                            <h6 class="mb-0 text-success fw-bold">
+                                ₹<%= booking.totalPrice.toLocaleString("en-IN") %>
+                            </h6>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="d-flex gap-2 mt-4">
+
+    <a
+        href="/listings/<%= booking.listing._id %>"
+        class="btn btn-dark"
+    >
+        View Listing
+    </a>
+
+    <form
+        action="/bookings/<%= booking._id %>?_method=DELETE"
+        method="POST"
+    >
+        <button
+            class="btn btn-danger"
+            onclick="return confirm('Are you sure you want to cancel this booking?')"
+        >
+            Cancel Booking
+        </button>
+    </form>
+
+</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+        <% }) %>
+
+    <% } %>
+
+</div>
+
+
+</body>

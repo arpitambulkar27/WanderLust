@@ -18,6 +18,7 @@ const User = require("./models/user.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+const bookingRouter = require("./routes/bookings.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -83,6 +84,7 @@ app.use((req, res, next) => {
 app.use("/listings", listingRouter); //This one line handles all routes of /listings
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
+app.use("/bookings", bookingRouter);
 
 app.use((req, res, next) => {
   next(new ExpressError(404, "Page not found"));
