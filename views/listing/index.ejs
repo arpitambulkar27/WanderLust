@@ -1,175 +1,141 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-<body>
-  <style>
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      margin-top: 1rem;
-      
-    }
+<!-- Category Scroll & Tax Switch Header Container -->
+<div class="d-flex align-items-center justify-content-between gap-3 categories-wrapper">
+  <!-- Scroll Left Button -->
+  <button class="scroll-btn d-none d-md-flex" id="scrollLeftBtn" aria-label="Scroll left">
+    <i class="fa-solid fa-chevron-left text-secondary"></i>
+  </button>
 
-    .filter {
-      text-align: center;
-      margin-right: 2rem;
-      margin-top: 1rem;
-      opacity: 0.7;
-      color: black;
-      
-    }
-
-    .filter p {
-      font-size: 0.8rem;
-    }
-
-    .filter:hover {
-      opacity: 1;
-      cursor: pointer;
-    }
-
-    .tax-switch {
-      border: 1px solid grey;
-      border-radius: 1rem;
-      height: 3rem;
-      padding: 1rem;
-      margin-left: 3rem;
-      display: flex;
-      align-items: center;
-    }
-
-    .tax-info{
-      display: none;
-    }
-  </style>
-
-  <!-- Filters -->
-<div class="filters">
-  <a href="/listings?category=trending" class="filter <%= category === 'trending' ? 'active' : '' %>">
-    <div class="icon">
+  <!-- Categories Scroll Track -->
+  <div class="categories-scroll flex-fill">
+    <a href="/listings" class="category-item <%= !locals.category ? 'active' : '' %>">
+      <i class="fa-solid fa-border-all"></i>
+      <span>All Places</span>
+    </a>
+    <a href="/listings?category=trending" class="category-item <%= locals.category === 'trending' ? 'active' : '' %>">
       <i class="fa-solid fa-fire"></i>
-    </div>
-    <p>Trending</p>
-  </a>
-
-  <a href="/listings?category=beach" class="filter <%= category === 'beach' ? 'active' : '' %>">
-    <div class="icon">
+      <span>Trending</span>
+    </a>
+    <a href="/listings?category=beach" class="category-item <%= locals.category === 'beach' ? 'active' : '' %>">
       <i class="fa-solid fa-umbrella-beach"></i>
-    </div>
-    <p>Beach</p>
-  </a>
-
-  <a href="/listings?category=castles" class="filter <%= category === 'castles' ? 'active' : '' %>">
-    <div class="icon">
+      <span>Beach</span>
+    </a>
+    <a href="/listings?category=castles" class="category-item <%= locals.category === 'castles' ? 'active' : '' %>">
       <i class="fa-solid fa-chess-rook"></i>
-    </div>
-    <p>Castles</p>
-  </a>
-
-  <a href="/listings?category=mountains" class="filter <%= category === 'mountains' ? 'active' : '' %>">
-    <div class="icon">
+      <span>Castles</span>
+    </a>
+    <a href="/listings?category=mountains" class="category-item <%= locals.category === 'mountains' ? 'active' : '' %>">
       <i class="fa-solid fa-mountain"></i>
-    </div>
-    <p>Mountains</p>
-  </a>
-
-  <a href="/listings?category=farms" class="filter <%= category === 'farms' ? 'active' : '' %>">
-    <div class="icon">
+      <span>Mountains</span>
+    </a>
+    <a href="/listings?category=farms" class="category-item <%= locals.category === 'farms' ? 'active' : '' %>">
       <i class="fa-solid fa-tractor"></i>
-    </div>
-    <p>Farms</p>
-  </a>
-
-  <a href="/listings?category=cabins" class="filter <%= category === 'cabins' ? 'active' : '' %>">
-    <div class="icon">
+      <span>Farms</span>
+    </a>
+    <a href="/listings?category=cabins" class="category-item <%= locals.category === 'cabins' ? 'active' : '' %>">
       <i class="fa-solid fa-house"></i>
-    </div>
-    <p>Cabins</p>
-  </a>
-
-  <a href="/listings?category=treehouses" class="filter <%= category === 'treehouses' ? 'active' : '' %>">
-    <div class="icon">
+      <span>Cabins</span>
+    </a>
+    <a href="/listings?category=treehouses" class="category-item <%= locals.category === 'treehouses' ? 'active' : '' %>">
       <i class="fa-solid fa-tree"></i>
-    </div>
-    <p>Treehouses</p>
-  </a>
-
-  <a href="/listings?category=camping" class="filter <%= category === 'camping' ? 'active' : '' %>">
-    <div class="icon">
+      <span>Treehouses</span>
+    </a>
+    <a href="/listings?category=camping" class="category-item <%= locals.category === 'camping' ? 'active' : '' %>">
       <i class="fa-solid fa-campground"></i>
-    </div>
-    <p>Camping</p>
-  </a>
-
-  <a href="/listings?category=lakefront" class="filter <%= category === 'lakefront' ? 'active' : '' %>">
-    <div class="icon">
+      <span>Camping</span>
+    </a>
+    <a href="/listings?category=lakefront" class="category-item <%= locals.category === 'lakefront' ? 'active' : '' %>">
       <i class="fa-solid fa-water"></i>
-    </div>
-    <p>Lakefront</p>
-  </a>
-
-  <a href="/listings?category=islands" class="filter <%= category === 'islands' ? 'active' : '' %>">
-    <div class="icon">
-      <i class="fa-solid fa-water"></i>
-    </div>
-    <p>Islands</p>
-  </a>
-
-  <a href="/listings?category=desert" class="filter <%= category === 'desert' ? 'active' : '' %>">
-    <div class="icon">
+      <span>Lakefront</span>
+    </a>
+    <a href="/listings?category=islands" class="category-item <%= locals.category === 'islands' ? 'active' : '' %>">
+      <i class="fa-solid fa-island-tropical"></i>
+      <span>Islands</span>
+    </a>
+    <a href="/listings?category=desert" class="category-item <%= locals.category === 'desert' ? 'active' : '' %>">
       <i class="fa-solid fa-sun"></i>
-    </div>
-    <p>Desert</p>
-  </a>
-
-  <a href="/listings?category=snow" class="filter <%= category === 'snow' ? 'active' : '' %>">
-    <div class="icon">
+      <span>Desert</span>
+    </a>
+    <a href="/listings?category=snow" class="category-item <%= locals.category === 'snow' ? 'active' : '' %>">
       <i class="fa-solid fa-snowflake"></i>
-    </div>
-    <p>Snow</p>
-  </a>
-
-  <a href="/listings?category=luxury" class="filter <%= category === 'luxury' ? 'active' : '' %>">
-    <div class="icon">
+      <span>Snow</span>
+    </a>
+    <a href="/listings?category=luxury" class="category-item <%= locals.category === 'luxury' ? 'active' : '' %>">
       <i class="fa-solid fa-gem"></i>
-    </div>
-    <p>Luxury</p>
-  </a>
-
-  <a href="/listings?category=historic" class="filter <%= category === 'historic' ? 'active' : '' %>">
-    <div class="icon">
+      <span>Luxury</span>
+    </a>
+    <a href="/listings?category=historic" class="category-item <%= locals.category === 'historic' ? 'active' : '' %>">
       <i class="fa-solid fa-landmark"></i>
-    </div>
-    <p>Historic</p>
-  </a>
-
-  <a href="/listings?category=amazing-views" class="filter <%= category === 'amazing-views' ? 'active' : '' %>">
-    <div class="icon">
+      <span>Historic</span>
+    </a>
+    <a href="/listings?category=amazing-views" class="category-item <%= locals.category === 'amazing-views' ? 'active' : '' %>">
       <i class="fa-solid fa-binoculars"></i>
+      <span>Amazing Views</span>
+    </a>
+  </div>
+
+  <!-- Scroll Right Button -->
+  <button class="scroll-btn d-none d-md-flex" id="scrollRightBtn" aria-label="Scroll right">
+    <i class="fa-solid fa-chevron-right text-secondary"></i>
+  </button>
+
+  <!-- Tax Switch Toggle Box -->
+  <div class="tax-toggle-box ms-md-3 d-none d-lg-flex">
+    <div class="form-check form-switch p-0 m-0 d-flex align-items-center gap-2">
+      <label class="form-check-label text-dark small fw-bold cursor-pointer" for="flexSwitchCheckDefault">
+        Display total before taxes
+      </label>
+      <input class="form-check-input m-0 ms-2" type="checkbox" role="switch" id="flexSwitchCheckDefault">
     </div>
-    <p>Amazing Views</p>
-  </a>
+  </div>
 </div>
 
-  <!-- Listings -->
-  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+<!-- Listings Cards Grid -->
+<% if (allListing.length === 0) { %>
+  <div class="text-center py-5 my-5">
+    <i class="fa-solid fa-magnifying-glass fs-1 text-muted mb-3"></i>
+    <h4 class="fw-bold">No stays found</h4>
+    <p class="text-secondary">Try searching for a different destination or clearing your category filters.</p>
+    <a href="/listings" class="btn btn-dark rounded-pill px-4">View All Listings</a>
+  </div>
+<% } else { %>
+  <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1 g-4">
     <% for (let list of allListing) { %>
-      <a href="/listings/<%= list._id %>" class="listing-link">
-        <div class="card">
-          <img
-            src="<%= list.image.url %>"
-            class="card-img-top hover-card"
-            alt="listing_image"
-            style="height: 18rem;"
-          />
-          <div class="card-body">
-            <p class="card-text">
-              <b><%= list.title %></b> <br />
-              &#8377;<%= (list.price || 0).toLocaleString("en-IN") %> / per night
-              <i class="tax-info">&nbsp;+18% GST</i>
-            </p>
+      <div class="col listing-card-wrapper">
+        <a href="/listings/<%= list._id %>" class="listing-card">
+          <!-- Card Image & Wishlist Button Container -->
+          <div class="card-img-container">
+            <img
+              src="<%= list.image && list.image.url ? list.image.url : 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=60' %>"
+              alt="<%= list.title %>"
+              loading="lazy"
+            />
+            <button class="wishlist-btn" data-id="<%= list._id %>" aria-label="Add to Wishlist">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+            <span class="guest-favorite-badge">Guest favorite</span>
           </div>
-        </div>
-      </a>
+
+          <!-- Card Details -->
+          <div class="card-details">
+            <div class="card-header-row">
+              <h5 class="card-title-text"><%= list.title %></h5>
+              <div class="card-rating">
+                <i class="fa-solid fa-star"></i>
+                <span>4.92</span>
+              </div>
+            </div>
+            <p class="card-subtitle"><%= list.location %>, <%= list.country %></p>
+            <p class="card-subtitle text-secondary">Added recently</p>
+            <div class="card-price-row">
+              <span class="card-price-amount">₹<%= (list.price || 0).toLocaleString("en-IN") %></span>
+              <span class="text-secondary fw-normal">/ night</span>
+              <span class="tax-info">&nbsp;+18% GST</span>
+            </div>
+          </div>
+        </a>
+      </div>
     <% } %>
   </div>
-</body>
+<% } %>

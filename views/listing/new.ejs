@@ -1,171 +1,173 @@
-<% layout("/layouts/boilerplate") %>
+<% layout("/layouts/boilerplate.ejs") %>
 
-<div class="row">
-  <div class="col-8 offset-2">
-    <form
-      method="POST"
-      action="/listings"
-      class="needs-validation"
-      enctype="multipart/form-data"
-      novalidate
-    >
-      <div class="mb-3">
-        <label class="form-label">Title</label>
-        <input
-          type="text"
-          name="listing[title]"
-          class="form-control"
-          required
-        />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Description</label>
-        <textarea
-          name="listing[description]"
-          class="form-control"
-          required
-        ></textarea>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Upload Image</label>
-        <input
-          type="file"
-          name="listing[image]"
-          class="form-control"
-          required
-        />
-      </div>
-
-      <div class="row">
-        <div class="col-md-4 mb-3">
-          <label class="form-label">Price</label>
-          <input
-            type="number"
-            name="listing[price]"
-            class="form-control"
-            required
-          />
+<div class="row py-4">
+  <div class="col-lg-8 offset-lg-2">
+    <div class="form-card">
+      <div class="d-flex align-items-center gap-3 mb-4 border-bottom pb-3">
+        <i class="fa-solid fa-house-medical fs-2 text-danger"></i>
+        <div>
+          <h2 class="form-title mb-0">Airbnb your home</h2>
+          <p class="text-secondary small mb-0">Tell us about your space to start receiving guests.</p>
         </div>
+      </div>
 
-        <div class="col-md-8 mb-3">
-          <label class="form-label">Country</label>
+      <form
+        method="POST"
+        action="/listings"
+        class="needs-validation"
+        enctype="multipart/form-data"
+        novalidate
+      >
+        <!-- Title -->
+        <div class="mb-4">
+          <label for="title" class="form-label fw-semibold">Listing Title</label>
           <input
             type="text"
-            name="listing[country]"
+            id="title"
+            name="listing[title]"
             class="form-control"
+            placeholder="e.g. Cozy Beach Villa with Sunset Views"
             required
           />
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Location</label>
-        <input
-          type="text"
-          name="listing[location]"
-          class="form-control"
-          required
-        />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Category</label>
-        <div class="dropdown">
-          <button
-            class="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="categoryDropdownBtn"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Select Category
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <a class="dropdown-item" href="#" data-value="trending"
-                >Trending</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" data-value="beach">Beach</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" data-value="castles">Castles</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" data-value="mountains"
-                >Mountains</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" data-value="farms">Farms</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" data-value="cabins">Cabins</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" data-value="treehouses"
-                >Treehouses</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" data-value="camping">Camping</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" data-value="lakefront"
-                >Lakefront</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" data-value="islands">Islands</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" data-value="desert">Desert</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" data-value="snow">Snow</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" data-value="luxury">Luxury</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" data-value="historic"
-                >Historic</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" data-value="amazing-views"
-                >Amazing Views</a
-              >
-            </li>
-          </ul>
+          <div class="invalid-feedback">Please enter a catchy title for your listing.</div>
         </div>
 
-        <!-- Ye hidden input hi actual form data hai jo backend tak jayega -->
-        <input
-          type="hidden"
-          name="listing[category]"
-          id="categoryInput"
-          required
-        />
-      </div>
+        <!-- Description -->
+        <div class="mb-4">
+          <label for="description" class="form-label fw-semibold">Description</label>
+          <textarea
+            id="description"
+            name="listing[description]"
+            rows="4"
+            class="form-control"
+            placeholder="Describe the atmosphere, unique features, neighborhood, and amenities..."
+            required
+          ></textarea>
+          <div class="invalid-feedback">Please provide a short description.</div>
+        </div>
 
-      <script>
-        document.querySelectorAll(".dropdown-item").forEach(function (item) {
-          item.addEventListener("click", function (e) {
-            e.preventDefault();
-            const value = this.getAttribute("data-value");
-            const text = this.textContent;
+        <!-- Category Selector Visual Grid -->
+        <div class="mb-4">
+          <label class="form-label fw-semibold d-block">Property Category</label>
+          <div class="category-select-grid">
+            <div class="category-select-btn" data-value="trending">
+              <i class="fa-solid fa-fire text-danger"></i>Trending
+            </div>
+            <div class="category-select-btn" data-value="beach">
+              <i class="fa-solid fa-umbrella-beach text-primary"></i>Beach
+            </div>
+            <div class="category-select-btn" data-value="castles">
+              <i class="fa-solid fa-chess-rook text-dark"></i>Castles
+            </div>
+            <div class="category-select-btn" data-value="mountains">
+              <i class="fa-solid fa-mountain text-success"></i>Mountains
+            </div>
+            <div class="category-select-btn" data-value="farms">
+              <i class="fa-solid fa-tractor text-warning"></i>Farms
+            </div>
+            <div class="category-select-btn" data-value="cabins">
+              <i class="fa-solid fa-house text-secondary"></i>Cabins
+            </div>
+            <div class="category-select-btn" data-value="treehouses">
+              <i class="fa-solid fa-tree text-success"></i>Treehouses
+            </div>
+            <div class="category-select-btn" data-value="camping">
+              <i class="fa-solid fa-campground text-warning"></i>Camping
+            </div>
+            <div class="category-select-btn" data-value="lakefront">
+              <i class="fa-solid fa-water text-info"></i>Lakefront
+            </div>
+            <div class="category-select-btn" data-value="islands">
+              <i class="fa-solid fa-island-tropical text-success"></i>Islands
+            </div>
+            <div class="category-select-btn" data-value="desert">
+              <i class="fa-solid fa-sun text-warning"></i>Desert
+            </div>
+            <div class="category-select-btn" data-value="snow">
+              <i class="fa-solid fa-snowflake text-info"></i>Snow
+            </div>
+            <div class="category-select-btn" data-value="luxury">
+              <i class="fa-solid fa-gem text-danger"></i>Luxury
+            </div>
+            <div class="category-select-btn" data-value="historic">
+              <i class="fa-solid fa-landmark text-secondary"></i>Historic
+            </div>
+            <div class="category-select-btn" data-value="amazing-views">
+              <i class="fa-solid fa-binoculars text-primary"></i>Amazing Views
+            </div>
+          </div>
+          <input type="hidden" name="listing[category]" id="categoryInput" required />
+          <div class="invalid-feedback">Please select a property category.</div>
+        </div>
 
-            document.getElementById("categoryInput").value = value;
-            document.getElementById("categoryDropdownBtn").textContent = text;
-          });
-        });
-      </script>
+        <!-- Image Dropzone & Preview -->
+        <div class="mb-4">
+          <label for="image" class="form-label fw-semibold">Listing Main Image</label>
+          <input
+            type="file"
+            id="image"
+            name="listing[image]"
+            class="form-control"
+            accept="image/*"
+            required
+          />
+          <div class="image-preview-box mt-2">
+            <span id="previewPlaceholder" class="text-secondary small"><i class="fa-solid fa-image me-1"></i> Image preview will appear here</span>
+            <img id="imagePreview" src="#" alt="Preview" style="display: none;" />
+          </div>
+          <div class="invalid-feedback">Please upload a valid image file.</div>
+        </div>
 
-      <button class="btn btn-dark">Add</button>
-    </form>
+        <!-- Price, Country, Location -->
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <label for="price" class="form-label fw-semibold">Price per Night (₹)</label>
+            <div class="input-group">
+              <span class="input-group-text">₹</span>
+              <input
+                type="number"
+                id="price"
+                name="listing[price]"
+                class="form-control"
+                placeholder="2500"
+                min="0"
+                required
+              />
+            </div>
+            <div class="invalid-feedback">Please enter a valid price.</div>
+          </div>
+
+          <div class="col-md-8 mb-4">
+            <label for="country" class="form-label fw-semibold">Country</label>
+            <input
+              type="text"
+              id="country"
+              name="listing[country]"
+              class="form-control"
+              placeholder="e.g. India"
+              required
+            />
+            <div class="invalid-feedback">Please enter the country.</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="location" class="form-label fw-semibold">Location / City</label>
+          <input
+            type="text"
+            id="location"
+            name="listing[location]"
+            class="form-control"
+            placeholder="e.g. Goa"
+            required
+          />
+          <div class="invalid-feedback">Please enter the location.</div>
+        </div>
+
+        <button type="submit" class="btn btn-airbnb-primary py-3 fs-6">
+          <i class="fa-solid fa-plus me-1"></i> Create Listing
+        </button>
+      </form>
+    </div>
   </div>
 </div>

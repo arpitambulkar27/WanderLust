@@ -1,100 +1,115 @@
-<style>
-.search-btn {
-  background-color: #fe424d;
-  color: white;
-  border-radius: 25px;
-  padding: 0 1rem 0 1rem;
-  
-}
+<nav class="navbar navbar-expand-md navbar-airbnb sticky-top">
+  <div class="container-fluid px-md-5">
+    <!-- Brand Logo -->
+    <a class="navbar-brand brand-logo" href="/listings">
+      <i class="fa-regular fa-compass"></i>
+      <span>wanderlust</span>
+    </a>
 
-.search-btn:hover {
-  background-color: #fe424d;
-  color: white;
-  border-radius: 2rem;
-}
-
-.search-btn i{
-  display: inline;
-  /* margin-left: 0.5rem; */
-}
-
-.search-input{
-  border-radius: 25px;
-  padding: 0.5rem 3rem 0.5rem 3rem;
-}
-
-</style>
-
-
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler border-0 shadow-none"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarContent"
+      aria-controls="navbarContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link" href="/listings">Explore</a>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <!-- Center Airbnb Pill Search Bar -->
+      <div class="mx-auto my-2 my-md-0">
+        <form action="/listings" method="GET" class="d-flex align-items-center">
+          <div class="search-bar-pill">
+            <input
+              type="text"
+              name="search"
+              class="search-pill-item form-control border-0 shadow-none p-0"
+              placeholder="Search destination..."
+              value="<%= locals.search || '' %>"
+              style="width: 150px;"
+            />
+            <% if (locals.category) { %>
+              <input type="hidden" name="category" value="<%= locals.category %>">
+            <% } %>
+            <button class="search-pill-btn ms-2" type="submit" aria-label="Search">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </form>
       </div>
 
-      <div class="navbar-nav ms-auto">
-      <form class="d-flex" role="search" action="/listings" method="GET">
-<input
-  class="form-control me-2 search-input"
-  type="search"
-  name="search"
-  value="<%= locals.search || '' %>"
-  placeholder="Search Destination"
-  aria-label="Search"
-/>
-<% if (locals.category) { %>
-  <input type="hidden" name="category" value="<%= locals.category %>">
-<% } %>
-  <button class="btn search-btn" type="submit">
-    <i class="fas fa-search"></i>&nbsp;&nbsp;Search
-  </button>
-</form>
-      </div>
+      <!-- Right Navigation Items -->
+      <ul class="navbar-nav align-items-center gap-2 ms-auto">
+        <li class="nav-item">
+          <a href="/listings/new" class="host-link">
+            Airbnb your home
+          </a>
+        </li>
 
-      <div class="navbar-nav ms-auto">
+        <!-- User Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <button
+            class="user-menu-btn dropdown-toggle border-0"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fa-solid fa-bars fs-6 text-secondary"></i>
+            <div class="avatar-circle">
+              <% if(currUser && currUser.username) { %>
+                <%= currUser.username.charAt(0).toUpperCase() %>
+              <% } else { %>
+                <i class="fa-solid fa-user"></i>
+              <% } %>
+            </div>
+          </button>
 
-  <% if(currUser){ %>
-
-    <a class="nav-link d-flex align-items-center" href="/bookings">
-      <i class="fa-solid fa-suitcase-rolling me-1"></i>
-      <b>My Trips</b>
-    </a>
-
-    <!-- <a class="nav-link" href="/listings/new">
-      <button type="button" class="btn btn-success">
-        Add Listing
-      </button>
-    </a> -->
-
-    <a class="nav-link" href="/logout">
-      <button type="button" class="btn btn-warning">
-        Log out
-      </button>
-    </a>
-
-  <% } else { %>
-
-    <a class="nav-link" href="/login">
-      <button type="button" class="btn btn-success">
-       Login
-      </button>
-    </a>
-    <img src="" alt="">
-
-    <a class="nav-link" href="/Signup">
-     <button type="button" class="btn btn-warning">
-       Signup
-      </button>
-    </a>
-
-  <% } %>
-
-</div>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-airbnb">
+            <% if(currUser) { %>
+              <li class="px-3 py-2 border-bottom">
+                <small class="text-muted d-block">Logged in as</small>
+                <strong><%= currUser.username %></strong>
+              </li>
+              <li>
+                <a class="dropdown-item fw-semibold" href="/bookings">
+                  <i class="fa-solid fa-suitcase-rolling me-2 text-secondary"></i>My Trips
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/listings/new">
+                  <i class="fa-solid fa-house-medical me-2 text-secondary"></i>Airbnb your home
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item text-danger" href="/logout">
+                  <i class="fa-solid fa-right-from-bracket me-2"></i>Log out
+                </a>
+              </li>
+            <% } else { %>
+              <li>
+                <a class="dropdown-item fw-semibold" href="/login">
+                  Log in
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item text-secondary" href="/signup">
+                  Sign up
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item" href="/listings/new">
+                  Airbnb your home
+                </a>
+              </li>
+            <% } %>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>

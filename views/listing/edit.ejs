@@ -1,74 +1,175 @@
-<% layout("/layouts/boilerplate") %>
+<% layout("/layouts/boilerplate.ejs") %>
 
-<div class="row">
-  <div class="col-8 offset-2">
-    <form method="POST" action="/listings/<%=hotel._id%>?_method=PUT"  class="needs-validation" enctype="multipart/form-data" novalidate >
-
-      <div class="mb-3">
-        <label class="form-label mt-4">Title</label>
-        <input
-          type="text"
-          class="form-control"
-          name="listing[title]"
-          value="<%= hotel.title %>"
-          required
-        />
-        <div class="invalid-feedback">Please enter title.</div>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Description</label>
-        <textarea class="form-control" name="listing[description]" required><%= hotel.description %></textarea>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Upload New Image</label>
-        <input
-          type="file"
-          name="listing[image]"
-          class="form-control"
-        />
-      </div>
-
-      <div class="row">
-        <div class="mb-3 col-md-4">
-          <label class="form-label">Price</label>
-          <input
-            type="number"
-            class="form-control"
-            name="listing[price]"
-            value="<%= hotel.price %>"
-            required
-          />
-          <div class="invalid-feedback">Enter valid price.</div>
+<div class="row py-4">
+  <div class="col-lg-8 offset-lg-2">
+    <div class="form-card">
+      <div class="d-flex align-items-center gap-3 mb-4 border-bottom pb-3">
+        <i class="fa-solid fa-pen-to-square fs-2 text-danger"></i>
+        <div>
+          <h2 class="form-title mb-0">Edit Listing</h2>
+          <p class="text-secondary small mb-0">Update property details, photos, or pricing.</p>
         </div>
+      </div>
 
-        <div class="mb-3 col-md-8">
-          <label class="form-label">Country</label>
+      <form
+        method="POST"
+        action="/listings/<%= hotel._id %>?_method=PUT"
+        class="needs-validation"
+        enctype="multipart/form-data"
+        novalidate
+      >
+        <!-- Title -->
+        <div class="mb-4">
+          <label for="title" class="form-label fw-semibold">Title</label>
           <input
             type="text"
+            id="title"
             class="form-control"
-            name="listing[country]"
-            value="<%= hotel.country %>"
+            name="listing[title]"
+            value="<%= hotel.title %>"
             required
           />
-          <div class="invalid-feedback">Enter valid country.</div>
+          <div class="invalid-feedback">Please enter title.</div>
         </div>
-      </div>
 
-      <div class="mb-3">
-        <label class="form-label">Location</label>
-        <input
-          type="text"
-          class="form-control"
-          name="listing[location]"
-          value="<%= hotel.location %>"
-          required
-        />
-        <div class="invalid-feedback">Enter valid location.</div>
-      </div>
+        <!-- Description -->
+        <div class="mb-4">
+          <label for="description" class="form-label fw-semibold">Description</label>
+          <textarea
+            id="description"
+            class="form-control"
+            name="listing[description]"
+            rows="4"
+            required
+          ><%= hotel.description %></textarea>
+        </div>
 
-      <button class="btn btn-dark">Edit</button>
-    </form>
+        <!-- Category Selector -->
+        <div class="mb-4">
+          <label class="form-label fw-semibold d-block">Property Category</label>
+          <div class="category-select-grid">
+            <% const currentCat = hotel.category || 'trending'; %>
+            <div class="category-select-btn <%= currentCat === 'trending' ? 'active' : '' %>" data-value="trending">
+              <i class="fa-solid fa-fire text-danger"></i>Trending
+            </div>
+            <div class="category-select-btn <%= currentCat === 'beach' ? 'active' : '' %>" data-value="beach">
+              <i class="fa-solid fa-umbrella-beach text-primary"></i>Beach
+            </div>
+            <div class="category-select-btn <%= currentCat === 'castles' ? 'active' : '' %>" data-value="castles">
+              <i class="fa-solid fa-chess-rook text-dark"></i>Castles
+            </div>
+            <div class="category-select-btn <%= currentCat === 'mountains' ? 'active' : '' %>" data-value="mountains">
+              <i class="fa-solid fa-mountain text-success"></i>Mountains
+            </div>
+            <div class="category-select-btn <%= currentCat === 'farms' ? 'active' : '' %>" data-value="farms">
+              <i class="fa-solid fa-tractor text-warning"></i>Farms
+            </div>
+            <div class="category-select-btn <%= currentCat === 'cabins' ? 'active' : '' %>" data-value="cabins">
+              <i class="fa-solid fa-house text-secondary"></i>Cabins
+            </div>
+            <div class="category-select-btn <%= currentCat === 'treehouses' ? 'active' : '' %>" data-value="treehouses">
+              <i class="fa-solid fa-tree text-success"></i>Treehouses
+            </div>
+            <div class="category-select-btn <%= currentCat === 'camping' ? 'active' : '' %>" data-value="camping">
+              <i class="fa-solid fa-campground text-warning"></i>Camping
+            </div>
+            <div class="category-select-btn <%= currentCat === 'lakefront' ? 'active' : '' %>" data-value="lakefront">
+              <i class="fa-solid fa-water text-info"></i>Lakefront
+            </div>
+            <div class="category-select-btn <%= currentCat === 'islands' ? 'active' : '' %>" data-value="islands">
+              <i class="fa-solid fa-island-tropical text-success"></i>Islands
+            </div>
+            <div class="category-select-btn <%= currentCat === 'desert' ? 'active' : '' %>" data-value="desert">
+              <i class="fa-solid fa-sun text-warning"></i>Desert
+            </div>
+            <div class="category-select-btn <%= currentCat === 'snow' ? 'active' : '' %>" data-value="snow">
+              <i class="fa-solid fa-snowflake text-info"></i>Snow
+            </div>
+            <div class="category-select-btn <%= currentCat === 'luxury' ? 'active' : '' %>" data-value="luxury">
+              <i class="fa-solid fa-gem text-danger"></i>Luxury
+            </div>
+            <div class="category-select-btn <%= currentCat === 'historic' ? 'active' : '' %>" data-value="historic">
+              <i class="fa-solid fa-landmark text-secondary"></i>Historic
+            </div>
+            <div class="category-select-btn <%= currentCat === 'amazing-views' ? 'active' : '' %>" data-value="amazing-views">
+              <i class="fa-solid fa-binoculars text-primary"></i>Amazing Views
+            </div>
+          </div>
+          <input type="hidden" name="listing[category]" id="categoryInput" value="<%= currentCat %>" required />
+        </div>
+
+        <!-- Current Image Thumbnail & Upload New Image -->
+        <div class="mb-4">
+          <label class="form-label fw-semibold d-block">Current Property Image</label>
+          <div class="image-preview-box mb-2">
+            <img id="imagePreview" src="<%= hotel.image && hotel.image.url ? hotel.image.url : '' %>" alt="Current Image" />
+          </div>
+
+          <label for="image" class="form-label fw-semibold mt-2">Upload New Image (Optional)</label>
+          <input
+            type="file"
+            id="image"
+            name="listing[image]"
+            class="form-control"
+            accept="image/*"
+          />
+        </div>
+
+        <!-- Price & Country -->
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <label for="price" class="form-label fw-semibold">Price (₹)</label>
+            <div class="input-group">
+              <span class="input-group-text">₹</span>
+              <input
+                type="number"
+                id="price"
+                class="form-control"
+                name="listing[price]"
+                value="<%= hotel.price %>"
+                required
+              />
+            </div>
+            <div class="invalid-feedback">Enter valid price.</div>
+          </div>
+
+          <div class="col-md-8 mb-4">
+            <label for="country" class="form-label fw-semibold">Country</label>
+            <input
+              type="text"
+              id="country"
+              class="form-control"
+              name="listing[country]"
+              value="<%= hotel.country %>"
+              required
+            />
+            <div class="invalid-feedback">Enter valid country.</div>
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="mb-4">
+          <label for="location" class="form-label fw-semibold">Location / City</label>
+          <input
+            type="text"
+            id="location"
+            class="form-control"
+            name="listing[location]"
+            value="<%= hotel.location %>"
+            required
+          />
+          <div class="invalid-feedback">Enter valid location.</div>
+        </div>
+
+        <div class="d-flex gap-3">
+          <button type="submit" class="btn btn-airbnb-primary py-3 fs-6 flex-fill">
+            Save Changes
+          </button>
+          <a href="/listings/<%= hotel._id %>" class="btn btn-outline-secondary py-3 px-4 fw-semibold">
+            Cancel
+          </a>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

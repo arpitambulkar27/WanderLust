@@ -40,23 +40,25 @@ module.exports.createBooking = async (req, res) => {
   }
 
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
-  const numberOfNights = (checkOut - checkIn) / MILLISECONDS_PER_DAY;
+  const numberOfNights = Math.ceil((checkOut - checkIn) / MILLISECONDS_PER_DAY);
 
-  const totalPrice = numberOfNights * listing.price;
+  const subtotal = numberOfNights * listing.price;
+  const gstTax = Math.round(subtotal * 0.18);
+  const totalPrice = subtotal + gstTax;
 
   const newBooking = new Booking({
     listing: listing._id,
     guest: req.user._id,
     checkIn,
     checkOut,
-    guests: req.body.booking.guests,
+    guests: req.body.booking.guests || 1,
     totalPrice,
   });
 
   await newBooking.save();
 
-  req.flash("success", "Booking created successfully!");
-  res.redirect(`/listings/${listing._id}`);
+  req.flash("success", "Reservation confirmed! Enjoy your trip.");
+  res.redirect("/bookings");
 };
 
 module.exports.showBookings = async (req, res) => {
